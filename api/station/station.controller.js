@@ -56,7 +56,7 @@ export async function updateStation(req, res) {
 	try {
 		const station = req.body
 		const updatedStation = await stationService.update(station)
-		socketService.broadcast({ type: 'station-updated', data: updatedStation ,userId: loggedinUser._id })
+		// socketService.broadcast({ type: 'station-updated', data: updatedStation ,userId: loggedinUser._id })
 		res.json(updatedStation)
 	} catch (err) {
 		logger.error('Failed to update station', err)
