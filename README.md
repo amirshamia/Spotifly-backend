@@ -1,1 +1,1 @@
-Coding Academy - production ready server 
+Coding Academy - production ready server

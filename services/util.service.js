@@ -1,3 +1,13 @@
+export const utilService = {
+	makeId,
+	getRandomInt,
+	debounce,
+	generateRandomName,
+	timeAgo,
+	generateRandomImg,
+	randomPastTime,
+}
+
 function makeId(length = 5) {
 	var txt = ''
 	var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -85,14 +95,4 @@ function randomPastTime() {
 
 	const pastTime = getRandomIntInclusive(HOUR, WEEK)
 	return Date.now() - pastTime
-}
-
-export const utilService = {
-	makeId,
-	getRandomInt,
-	debounce,
-	generateRandomName,
-	timeAgo,
-	generateRandomImg,
-	randomPastTime,
 }

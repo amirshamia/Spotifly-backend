@@ -1,9 +1,9 @@
+import mongodb from 'mongodb'
+
 import { dbService } from '../../services/db.service.js'
 import { logger } from '../../services/logger.service.js'
-import mongodb from 'mongodb'
-const { ObjectId } = mongodb
 
-// import { utilService } from '../../services/util.service.js'
+const { ObjectId } = mongodb
 
 export const stationService = {
 	remove,
@@ -11,40 +11,36 @@ export const stationService = {
 	getById,
 	add,
 	update,
-	// addStationMsg,
-	// removeStationMsg,
 }
 
 async function query(filterBy) {
 	try {
-		const criteria = {
-		
-		}
+		const criteria = {}
 		if (filterBy.txt) {
-			criteria.name = { $regex: filterBy.txt, $options: 'i' };
-		  }
-		  
-		  if (filterBy.isRecommended) {
-			criteria.isRecommended = true;
-		  }
-		  
-		  if (filterBy.genre) {
-			criteria.tags = filterBy.genre;
-		  }
-		  
-		  if (filterBy.user) {
+			criteria.name = { $regex: filterBy.txt, $options: 'i' }
+		}
+
+		if (filterBy.isRecommended) {
+			criteria.isRecommended = true
+		}
+
+		if (filterBy.genre) {
+			criteria.tags = filterBy.genre
+		}
+
+		if (filterBy.user) {
 			if (filterBy.liked) {
-			  criteria['likedByUsers._id'] = filterBy.user._id;
+				criteria['likedByUsers._id'] = filterBy.user._id
 			} else {
-			  criteria['createdBy._id'] = filterBy.user._id;
+				criteria['createdBy._id'] = filterBy.user._id
 			}
-		  }
+		}
 
 		const collection = await dbService.getCollection('station')
 		var stationCursor = await collection.find(criteria)
 
 		const stations = stationCursor.toArray()
-		console.log(stations);
+		console.log(stations)
 		return stations
 	} catch (err) {
 		logger.error('cannot find stations', err)
@@ -75,7 +71,7 @@ async function remove(stationId) {
 }
 
 async function add(station) {
-	console.log('hi');
+	console.log('hi')
 	try {
 		const collection = await dbService.getCollection('station')
 		await collection.insertOne(station)
@@ -94,7 +90,7 @@ async function update(station) {
 			songs: station.songs,
 			imgUrl: station.imgUrl,
 			likedByUsers: station.likedByUsers,
-			msgs:station.msgs
+			msgs: station.msgs,
 		}
 		const collection = await dbService.getCollection('station')
 		await collection.updateOne({ _id: ObjectId(station._id) }, { $set: stationToSave })
@@ -104,26 +100,3 @@ async function update(station) {
 		throw err
 	}
 }
-
-// async function addStationMsg(stationId, msg) {
-// 	try {
-// 		msg.id = utilService.makeId()
-// 		const collection = await dbService.getCollection('station')
-// 		await collection.updateOne({ _id: ObjectId(stationId) }, { $push: { msgs: msg } })
-// 		return msg
-// 	} catch (err) {
-// 		logger.error(`cannot add station msg ${stationId}`, err)
-// 		throw err
-// 	}
-// }
-
-// async function removeStationMsg(stationId, msgId) {
-// 	try {
-// 		const collection = await dbService.getCollection('station')
-// 		await collection.updateOne({ _id: ObjectId(stationId) }, { $pull: { msgs: { id: msgId } } })
-// 		return msgId
-// 	} catch (err) {
-// 		logger.error(`cannot add station msg ${stationId}`, err)
-// 		throw err
-// 	}
-// }

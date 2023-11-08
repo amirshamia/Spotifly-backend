@@ -1,10 +1,9 @@
 import { userService } from './user.service.js'
 import { logger } from '../../services/logger.service.js'
-import { socketService } from '../../services/socket.service.js'
 
 export async function getUser(req, res) {
 	try {
-		console.log(req.params);
+		console.log(req.params)
 		const user = await userService.getById(req.params.id)
 		res.send(user)
 	} catch (err) {
@@ -39,7 +38,7 @@ export async function deleteUser(req, res) {
 
 export async function updateUser(req, res) {
 	try {
-		console.log(req.body,'asdads')
+		console.log(req.body, 'asdads')
 		const user = req.body
 		const savedUser = await userService.update(user)
 		res.send(savedUser)

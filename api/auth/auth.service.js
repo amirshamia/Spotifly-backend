@@ -18,7 +18,7 @@ async function login(username, password) {
 
 	const user = await userService.getByUsername(username)
 	if (!user) return Promise.reject('Invalid username or password')
-	// TODO: un-comment for real login
+
 	// const match = await bcrypt.compare(password, user.password)
 	// if (!match) return Promise.reject('Invalid username or password')
 
@@ -55,8 +55,3 @@ function validateToken(loginToken) {
 	}
 	return null
 }
-
-// ;(async ()=>{
-//     await signup('bubu', '123', 'Bubu Bi')
-//     await signup('mumu', '123', 'Mumu Maha')
-// })()
