@@ -38,7 +38,7 @@ async function query(filterBy) {
 
 		const collection = await dbService.getCollection('station')
 		var stationCursor = await collection.find(criteria)
-
+		stationCursor = stationCursor.sort({ name: 1 });
 		const stations = stationCursor.toArray()
 		console.log(stations)
 		return stations
